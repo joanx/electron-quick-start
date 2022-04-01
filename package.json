@@ -1,22 +1,42 @@
 {
-  "name": "electron-quick-start",
+  "name": "electron-quick-start-apns",
   "version": "1.0.0",
   "description": "A minimal Electron application",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
-  "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
-  ],
+  "repository": "https://github.com/joanx/electron-quick-start",
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^18.0.0"
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
+    "electron": "19.0.0-nightly.20220329"
+  },
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "electron-log": "^3.0.5",
+    "electron-squirrel-startup": "^1.0.0",
+    "node-gyp": "^4.0.0"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "electronZipDir": "/Users/joanxie/development",
+        "appBundleId": "???",
+        "osxSign": {
+          "identity": "???",
+          "entitlements": "entitlements-dev.plist"
+        }
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-zip"
+        }
+      ]
+    }
   }
 }
