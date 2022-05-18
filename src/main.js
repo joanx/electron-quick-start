@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Notification, dialog } = require("electron");
+const { app, pushNotifications, BrowserWindow, Notification, dialog } = require("electron");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -27,7 +27,6 @@ function createWindow() {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
-  app.registerForRemoteNotifications();
 }
 
 // This method will be called when Electron has finished
@@ -38,6 +37,7 @@ app.on("ready", (event, launch_info) => {
     launchInfoString = JSON.stringify(launch_info);
   }
   createWindow();
+  pushNotifications.registerForRemoteNotifications();
 });
 
 // Quit when all windows are closed.
@@ -57,14 +57,14 @@ app.on("registered-for-remote-notifications", (event, token) => {
   dialog.showMessageBox({title: "Registered for APNS", detail: token})
 });
 
-app.on(
+pushNotifications.on(
   "failed-to-register-for-remote-notifications",
   (event, error) => {
     dialog.showMessageBox({title: "Failed to register for APNS", detail: error})
   }
 );
 
-app.on("received-remote-notification", (event, user_info) => {
+pushNotifications.on("received-remote-notification", (event, user_info) => {
   const title = user_info["aps"]["alert"]["title"]
   const body = user_info["aps"]["alert"]["body"]
   new Notification({ title, body}).show()
