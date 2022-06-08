@@ -14,7 +14,7 @@
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.63",
     "@electron-forge/maker-zip": "^6.0.0-beta.63",
-    "electron": "19.0.0-nightly.20220329"
+    "electron": "18.0.0"
   },
   "dependencies": {
     "bindings": "^1.5.0",
@@ -25,16 +25,22 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "electronZipDir": "/Users/joanxie/development",
         "appBundleId": "???",
+        "electronZipDir": "/Users/joanxie/development",
         "osxSign": {
-          "identity": "???",
+          "identity": "Developer ID Application: ???",
           "entitlements": "entitlements-dev.plist"
         }
       },
       "makers": [
         {
           "name": "@electron-forge/maker-zip"
+        },
+        {
+          "name": "@electron-forge/maker-dmg",
+          "platforms": [
+            "darwin"
+          ]
         }
       ]
     }

@@ -37,7 +37,7 @@ app.on("ready", (event, launch_info) => {
     launchInfoString = JSON.stringify(launch_info);
   }
   createWindow();
-  pushNotifications.registerForRemoteNotifications();
+  pushNotifications.registerForAPNSNotifications();
 });
 
 // Quit when all windows are closed.
@@ -53,18 +53,18 @@ app.on("activate", function() {
   if (mainWindow === null) createWindow();
 });
 
-app.on("registered-for-remote-notifications", (event, token) => {
+pushNotifications.on("registered-for-apns-notifications", (event, token) => {
   dialog.showMessageBox({title: "Registered for APNS", detail: token})
 });
 
 pushNotifications.on(
-  "failed-to-register-for-remote-notifications",
+  "failed-to-register-for-apns-notifications",
   (event, error) => {
-    dialog.showMessageBox({title: "Failed to register for APNS", detail: error})
+    dialog.showMessageBox({title: "Failed to register for APNS", detail: `failed to register: ${error}`})
   }
 );
 
-pushNotifications.on("received-remote-notification", (event, user_info) => {
+pushNotifications.on("received-apns-notification", (event, user_info) => {
   const title = user_info["aps"]["alert"]["title"]
   const body = user_info["aps"]["alert"]["body"]
   new Notification({ title, body}).show()
