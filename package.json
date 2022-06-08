@@ -28,7 +28,7 @@
         "appBundleId": "???",
         "electronZipDir": "/Users/joanxie/development",
         "osxSign": {
-          "identity": "Developer ID Application: ???",
+          "identity": "Mac Developer: ???",
           "entitlements": "entitlements-dev.plist"
         }
       },
