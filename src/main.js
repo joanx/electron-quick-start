@@ -37,7 +37,11 @@ app.on("ready", (event, launch_info) => {
     launchInfoString = JSON.stringify(launch_info);
   }
   createWindow();
-  pushNotifications.registerForAPNSNotifications();
+  pushNotifications.registerForAPNSNotifications().then(token => 
+    dialog.showMessageBox({title: "Registered for APNS", detail: token})
+  ).catch(error => 
+    dialog.showMessageBox({title: "Failed to register for APNS via", detail: `failed to register: ${error}`})
+  )
 });
 
 // Quit when all windows are closed.
@@ -52,17 +56,6 @@ app.on("activate", function() {
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) createWindow();
 });
-
-pushNotifications.on("registered-for-apns-notifications", (event, token) => {
-  dialog.showMessageBox({title: "Registered for APNS", detail: token})
-});
-
-pushNotifications.on(
-  "failed-to-register-for-apns-notifications",
-  (event, error) => {
-    dialog.showMessageBox({title: "Failed to register for APNS", detail: `failed to register: ${error}`})
-  }
-);
 
 pushNotifications.on("received-apns-notification", (event, user_info) => {
   const title = user_info["aps"]["alert"]["title"]
